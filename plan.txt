@@ -1,13 +1,19 @@
-Step 1: Load Data from CSV and Retrieve Market Cap Data
-First, we will load the list of stock tickers from a CSV file. Using the yfinance library, we’ll retrieve the corresponding stocks and their market capitalizations. This will help us identify the largest companies in the list by market value.
+Step 1: Data Cleaning
+We should make sure that stocks meet the following requirements:
+  1. in the US or Canada market
+  2. average monthly volume > 100,000 shares from October 01, 2023 to September 30, 2024 (Drop any month that does not have at least 18 trading days.)
 
-Step 2: Sort Stocks by Market Capitalization (Descending Order)
-Next, we’ll sort the stocks by their market capitalization in descending order. This means that the companies with the highest market value will appear at the top of the list, making it easier to select the largest companies.
+Step 2: Stock Rating and Ranking
+  1. Rating based on market capitalization, returns, beta, etc.
+  2. Sorting the stocks by using ranking
 
-Step 3: Select the Top 24 Stocks to Simulate the Market (S&P 500 and TSX 60)
-We’ll choose the top 24 stocks from our sorted list, representing those with the largest market capitalizations. In the S&P 500 and TSX 60 indices, each stock’s weight is proportional to its market capitalization. Therefore, larger companies have a greater influence on the overall index. By selecting more stocks, specifically 24, we aim to achieve greater stability and a better representation of the market.
+Step 3: Determine the Number of Stocks
+Aiming closer to 24 stocks increases stability and minimizes individual stock risk, helping the portfolio better mirror market trends
 
-Step 4: Purchase Stocks Based on Market Weight
-Finally, we’ll purchase shares of each selected stock based on its market weight in the portfolio. The market weight for each stock will be calculated as the stock's market capitalization divided by the total market capitalization of all selected stocks. This way, larger companies will represent a higher proportion of the portfolio, similar to how they are weighted in the S&P 500 and TSX 60 indices.
+Step 4: Select stocks and Determine weight
+Requirements:
+  1. Spend all $1,000,000 CAD
+  2. (100/2n)% <= weight <= 15% 
+  3. Transaction $0.001 per share, no more than $3.95
 
-
+Step 5: Calculate Portfolio Return
