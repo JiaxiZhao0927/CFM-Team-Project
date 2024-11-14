@@ -1,0 +1,18 @@
+Explanation of the Function calculate_weight
+
+Assigning weights based solely on proportional ratings is not feasible because it fails to meet the constraints of maximum and minimum thresholds. 
+For example, if we have ratings of [0.9] * 6 and [0.1] * 6, the first six stocks would exceed 15% of the total weight based on their proportional rating. 
+However, the remaining six stocks, with much smaller ratings, would be assigned weights significantly below the minimum threshold of (100/(2*12)) = 4.17%. 
+
+Simply limiting the upper bound is also not sufficient. In the same example, if we cap the weights of the first six stocks at 15%, their total weight would be 90%, leaving only 10% for the remaining six stocks. 
+Since the minimum threshold for each stock is 4.17% in this scenario, this approach would fail to allocate enough weight to satisfy the minimum requirement for all the remaining stocks.
+
+To resolve these issues, I developed a method that ensures both constraints are met. Initially, each stock is assigned the minimum required weight, which guarantees that no stock is underweighted. 
+From there, the remaining weight is redistributed among the stocks proportionally, but only to the extent that no stock exceeds the maximum threshold of 15%.
+The reassignment process uses a copy of the original DataFrame, referred to as the reassign_dataFrame. During redistribution, if the weight of a stock exceeds 15%, it is capped at this maximum value, 
+and the excess weight is added back to the remaining_weight. The stock that reaches its maximum weight is removed from the reassign_dataFrame, and the proportional ratings of the remaining stocks are recalculated.
+Redistribution continues among the remaining eligible stocks until all the weight is allocated.
+
+I have confirmed that the reassignment process completes in no more than four iterations based on my calculations, even for edge cases. 
+To address potential floating-point precision issues, such as when 0.1 plus 0.2 results in 0.30000000000000004 instead of 0.3, the final scaling step ensures that weights sum exactly to 100%. 
+These precision issues arise from the limitations of representing decimal numbers in binary format in computer memory, but the refinement step effectively resolves these discrepancies.
